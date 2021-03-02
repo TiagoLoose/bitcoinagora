@@ -2,7 +2,20 @@ import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 
-export default function Home() {
+import { getCotacao } from '../services/MercadoBitcoinApi'
+
+export async function getStaticProps() {
+  const cotacao = await getCotacao({sigla: 'BTC'})
+  console.log("AQUI")
+  console.log(cotacao);
+  return {
+    props: {
+      cotacao,
+    },
+  }
+}
+
+export default function Home({cotacao}) {
   return (
     <div className={styles.container}>
       <Head>
@@ -19,7 +32,7 @@ export default function Home() {
         </div>
 
         <div className={styles.cotacao}>
-          B$<input type="text" className={styles.campoValor} value="1" /> = R$ <input type="text" className={styles.campoValor} value="260 000,00"/>
+          B$<input type="text" className={styles.campoValor} value="1" /> = R$ <input type="text" className={styles.campoValor} value={cotacao.atual}/>
         </div>
       </main>
 
