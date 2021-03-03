@@ -12,6 +12,7 @@ export async function getStaticProps() {
     props: {
       cotacao,
     },
+    revalidate: 60
   }
 }
 
